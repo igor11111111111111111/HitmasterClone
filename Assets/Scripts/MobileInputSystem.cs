@@ -9,35 +9,31 @@ namespace HitmasterClone
     {
         public event Action<Vector3> OnClick;
         private Camera _camera;
+        private int _shootDistance;
 
         [Inject]
         private void Init(Camera camera)
         {
             _camera = camera;
+            _shootDistance = 10;
         }
 
         private void Update()
         {
-            // для теста через пк
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit raycastHit))
+                if (Physics.Raycast(ray, out RaycastHit raycastHit, _shootDistance))
                 {
                     OnClick?.Invoke(raycastHit.point);
                 }
+                else
+                {
+                    var screenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _shootDistance);
+                    var worldPosition = _camera.ScreenToWorldPoint(screenPosition);
+                    OnClick?.Invoke(worldPosition);
+                }
             }
-
-            // для билда mobile
-            //if (Input.touchCount > 0)
-            //{
-            //    Touch touch = Input.GetTouch(0);
-            //    Ray ray = _camera.ScreenPointToRay(touch.position);
-            //    if (Physics.Raycast(ray, out RaycastHit raycastHit))
-            //    {
-            //        OnClick?.Invoke(raycastHit.point);
-            //    }
-            //}
         }
     }
 }
