@@ -1,20 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
 namespace HitmasterClone
 {
-    public class GameMonoInstaller : MonoInstaller
+    public class GameMonoInstaller : MonoBehaviour
     {
         [SerializeField]
         private Camera _camera;
-        [SerializeField]
-        private PlayerMonoInstaller _playerPrefab;
-        [SerializeField]
-        private Bullet _bulletPrefab;
         [SerializeField]
         private Platform _startPlatform;
         [SerializeField]
@@ -22,67 +16,20 @@ namespace HitmasterClone
         [SerializeField]
         private Button _playButton;
 
-        public override void InstallBindings()
+        public void Awake()
         {
-            Camera();
-            BulletPool();
-            PlatformSystem();
-            MobileInputSystem();
-            StartSystem();
-            FinishSystem();
-            Player();
-        }
-
-        private void PlatformSystem()
-        {
-            Container
-                .Bind<PlatformSystem>()
-                .FromInstance(new PlatformSystem(_startPlatform))
-                .AsSingle();
-        }
-
-        private void Camera()
-        {
-            Container
-                .Bind<Camera>()
-                .FromInstance(_camera)
-                .AsSingle();
-        }
-
-        private void BulletPool()
-        {
-            Container
-                .Bind<BulletPool>()
-                .FromInstance(new BulletPool(_bulletPrefab, 10, _bulletPoolParent))
-                .AsSingle();
-        }
-
-        private void MobileInputSystem()
-        {
-            var mobileInputSystem = GetComponent<MobileInputSystem>();
-            Container
-                .Bind<MobileInputSystem>()
-                .FromInstance(mobileInputSystem)
-                .AsSingle();
-            Container.QueueForInject(mobileInputSystem);
-        }
-
-        private void StartSystem()
-        {
-            Container
-                .Bind<StartSystem>()
-                .FromInstance(new StartSystem(_playButton))
-                .AsSingle();
-        }
-
-        private void FinishSystem()
-        {
-            Container.QueueForInject(new FinishSystem());
-        }
-
-        private void Player()
-        {
-            Container.InstantiatePrefabForComponent<PlayerMonoInstaller>(_playerPrefab, _startPlatform.transform.position, _startPlatform.transform.rotation, null);
+            var context = gameObject.AddComponent<SceneContext>();
+            context.Installers = new List<MonoInstaller>()
+            {
+                gameObject.AddComponent<CameraMonoInstaller>().Init(_camera),
+                gameObject.AddComponent<BulletMonoInstaller>().Init(_bulletPoolParent),
+                gameObject.AddComponent<PlatformMonoInstaller>().Init(_startPlatform),
+                gameObject.AddComponent<MobileInputMonoInstaller>().Init(),
+                gameObject.AddComponent<StartSystemMonoInstaller>().Init(_playButton),
+                gameObject.AddComponent<FinishSystemMonoInstaller>().Init(),
+                gameObject.AddComponent<PlayerSpawnMonoInstaller>().Init(_startPlatform)
+            };
+            context.Run();
         }
     }
 }

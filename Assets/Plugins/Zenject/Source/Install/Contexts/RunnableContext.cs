@@ -9,7 +9,7 @@ namespace Zenject
     {
         [Tooltip("When false, wait until run method is explicitly called. Otherwise run on initialize")]
         [SerializeField]
-        bool _autoRun = true;
+        bool _autoRun = false;
 
         static bool _staticAutoRun = true;
 
