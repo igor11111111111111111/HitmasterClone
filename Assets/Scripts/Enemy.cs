@@ -1,32 +1,35 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace HitmasterClone
 {
+
     public class Enemy : MonoBehaviour
-    { 
+    {
+        public event Action<int> OnTakeDamage;
         public EnemyData Data => _data;
         private EnemyData _data;
         [SerializeField]
         private EnemyHealthUI _healthUI;
         [SerializeField]
         private Animator _animator;
+        [SerializeField]
+        private Collider _collider;
 
         private void Awake()
         {
-            _data = new EnemyData(3);
+            _data = new EnemyData(3, this);
             new EnemyAnimator(_animator, _data);
-            _healthUI.Refresh(_data.NormalizedHealth);
+            new EnemyHealthController(_healthUI, _data, this);
 
-            _data.OnDeath += () => _healthUI.Enable(false);
+            _data.OnDeath += () => _collider.enabled = false;
         }
 
         public void TakeDamage(int damage)
         {
             if (!_data.IsAlive)
                 return;
-
-            _data.CurrentHealth -= damage;
-            _healthUI.Refresh(_data.NormalizedHealth);
+            OnTakeDamage?.Invoke(damage);
         }
     }
 }

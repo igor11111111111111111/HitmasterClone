@@ -25,11 +25,12 @@ namespace HitmasterClone
         private int _currentHealth;
         public float NormalizedHealth => CurrentHealth / (float)MaxHealth;
 
-        public EnemyData(int health)
+        public EnemyData(int health, Enemy enemy)
         {
             MaxHealth = _currentHealth = health;
             _isAlive = true;
             OnDeath += () => _isAlive = false;
+            enemy.OnTakeDamage += (damage) => CurrentHealth -= damage;
         }
     }
 }
