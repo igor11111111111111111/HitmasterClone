@@ -18,9 +18,9 @@ namespace HitmasterClone
         [Inject]
         private void Init(PlayerController controller)
         {
-            controller.OnMove += Move;
             controller.OnShoot += Shoot;
-            controller.OnInBattle += InBattle;
+            controller.OnMove += Move;
+            controller.OnMove += InBattle;
         }
 
         private void Move(bool active)
@@ -35,7 +35,7 @@ namespace HitmasterClone
 
         private void InBattle(bool active)
         {
-            _animator.SetBool(_hashNames.InBattle, active);
+            _animator.SetBool(_hashNames.InBattle, !active);
         }
     }
 }

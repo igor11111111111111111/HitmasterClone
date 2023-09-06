@@ -6,7 +6,6 @@ namespace HitmasterClone
 {
     public class PlayerController
     {
-        public event Action<bool> OnInBattle;
         public event Action<bool> OnMove;
         public event Action<Vector3> OnShoot;
 
@@ -24,14 +23,12 @@ namespace HitmasterClone
             trigger.OnEnter += (_) =>
             {
                 data.InBattle = true;
-                OnInBattle?.Invoke(true);
                 OnMove?.Invoke(false);
             };
 
             platformSystem.OnAllEnemyDeath += () =>
             {
                 data.InBattle = false;
-                OnInBattle?.Invoke(false);
                 OnMove?.Invoke(true);
             };
         }

@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Cinemachine;
 
 namespace HitmasterClone
 {
@@ -9,6 +10,9 @@ namespace HitmasterClone
     {
         [SerializeField]
         private Camera _camera;
+        [SerializeField]
+        private CinemachineVirtualCamera _CVC;
+
         [SerializeField]
         private Platform _startPlatform;
         [SerializeField]
@@ -21,7 +25,7 @@ namespace HitmasterClone
             var context = gameObject.AddComponent<SceneContext>();
             context.Installers = new List<MonoInstaller>()
             {
-                gameObject.AddComponent<CameraMonoInstaller>().Init(_camera),
+                gameObject.AddComponent<CameraMonoInstaller>().Init(_camera, _CVC),
                 gameObject.AddComponent<BulletMonoInstaller>().Init(_bulletPoolParent),
                 gameObject.AddComponent<PlatformMonoInstaller>().Init(_startPlatform),
                 gameObject.AddComponent<MobileInputMonoInstaller>().Init(),
