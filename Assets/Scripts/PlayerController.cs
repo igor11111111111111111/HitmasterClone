@@ -6,9 +6,9 @@ namespace HitmasterClone
 {
     public class PlayerController
     {
-        public Action<bool> OnInBattle;
-        public Action<bool> OnMove;
-        public Action<Vector3> OnShoot;
+        public event Action<bool> OnInBattle;
+        public event Action<bool> OnMove;
+        public event Action<Vector3> OnShoot;
 
         [Inject]
         private void Init(StartSystem startSystem, MobileInputSystem input, PlayerTrigger trigger, PlayerData data, PlatformSystem platformSystem)

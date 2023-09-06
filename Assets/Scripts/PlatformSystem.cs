@@ -5,8 +5,8 @@ namespace HitmasterClone
 {
     public class PlatformSystem
     {
-        public Action OnAllEnemyDeath;
-        public Action OnFinish;
+        public event Action OnAllEnemyDeath;
+        public event Action OnFinish;
         private Platform _current;
 
         public PlatformSystem(Platform start)

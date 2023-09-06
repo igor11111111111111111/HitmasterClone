@@ -8,6 +8,8 @@ namespace HitmasterClone
     {
         private Camera _camera;
         private PlayerData _data;
+        private Vector3 _outBattlePosition;
+        private Vector3 _outBattleRotation;
 
         [Inject]
         private void Init(Camera camera, PlayerData data)
@@ -15,18 +17,8 @@ namespace HitmasterClone
             camera.transform.SetParent(transform);
             _camera = camera;
             _data = data;
-
-
-                //if (active)
-                //{
-                //    camera.transform.parent = null;
-                //    camera.transform.localPosition = transform.localPosition;
-                //    /*new Vector3(camera.transform.localPosition.x, 2.4f, camera.transform.localPosition.z);*/
-                //}
-                //else
-                //{
-                //    camera.transform.SetParent(transform);
-                //}
+            _outBattlePosition = new Vector3(0, 2.7f, -3.3f);
+            _outBattleRotation = new Vector3(13, 0, 0);
         }
 
         private void Update()
@@ -38,8 +30,8 @@ namespace HitmasterClone
             else
             {
                 _camera.transform.parent = transform;
-                _camera.transform.localPosition = new Vector3(0, 2.7f, -3.3f);
-                _camera.transform.localRotation = Quaternion.Euler(new Vector3(13, 0, 0));
+                _camera.transform.localPosition = _outBattlePosition;
+                _camera.transform.localRotation = Quaternion.Euler(_outBattleRotation);
             }
         }
     }

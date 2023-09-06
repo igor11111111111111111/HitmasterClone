@@ -18,7 +18,7 @@ namespace HitmasterClone
             Bullet prefab = Resources.Load<Bullet>(nameof(Bullet));
             Container
                 .Bind<BulletPool>()
-                .FromInstance(new BulletPool(prefab, 10, _bulletPoolParent))
+                .FromInstance(new BulletPool(prefab, _bulletPoolParent))
                 .AsSingle();
         }
     }

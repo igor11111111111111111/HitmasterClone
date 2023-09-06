@@ -5,7 +5,7 @@ namespace HitmasterClone
 {
     public class PlatformWaypoint : MonoBehaviour
     {
-        public Action OnPlayerEnter;
+        public event Action OnPlayerEnter;
 
         private void OnTriggerEnter(Collider other)
         {

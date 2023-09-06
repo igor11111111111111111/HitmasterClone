@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace HitmasterClone
 {
+    [RequireComponent(typeof(BoxCollider))]
     public class Platform : MonoBehaviour
     {
-        public Action OnAllEnemyDeath;
-        public Action OnPlayerEnter;
-
+        public event Action OnAllEnemyDeath;
+        public event Action OnPlayerEnter;
         public Platform NextPlatform => _nextPlatform;
         [SerializeField]
         private Platform _nextPlatform;

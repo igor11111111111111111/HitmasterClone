@@ -7,9 +7,9 @@ namespace HitmasterClone
 {
     public class MobileInputSystem : MonoBehaviour
     {
+        public event Action<Vector3> OnClick;
         private Camera _camera;
-        public Action<Vector3> OnClick;
-        
+
         [Inject]
         private void Init(Camera camera)
         {

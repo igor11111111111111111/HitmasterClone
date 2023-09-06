@@ -5,11 +5,9 @@ namespace HitmasterClone
 {
     public class EnemyData
     {
-        public Action OnDeath;
-
+        public event Action OnDeath;
         public bool IsAlive => _isAlive;
         private bool _isAlive;
-
         public readonly int MaxHealth;
         public int CurrentHealth
         {
@@ -17,7 +15,7 @@ namespace HitmasterClone
             {
                 return _currentHealth;
             }
-            set
+            set 
             {
                 _currentHealth = value;
                 if (_currentHealth <= 0)

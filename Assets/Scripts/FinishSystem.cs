@@ -1,5 +1,4 @@
-﻿using UnityEngine.SceneManagement;
-using Zenject;
+﻿using Zenject;
 
 namespace HitmasterClone
 {
@@ -8,7 +7,7 @@ namespace HitmasterClone
         [Inject]
         private void Init(PlatformSystem platformSystem)
         {
-            platformSystem.OnFinish += () => SceneManager.LoadScene("Game");
+            platformSystem.OnFinish += () => new SceneChanger(SceneNames.Game);
         }
     }
 }

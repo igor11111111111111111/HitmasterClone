@@ -2402,6 +2402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthUI: {fileID: 3902226052088482217}
+  _animator: {fileID: 1445080044830387458}
 --- !u!1 &9203520840505384665
 GameObject:
   m_ObjectHideFlags: 0

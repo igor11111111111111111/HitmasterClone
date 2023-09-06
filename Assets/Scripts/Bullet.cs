@@ -2,6 +2,7 @@
 
 namespace HitmasterClone
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class Bullet : MonoBehaviour
     {
         [SerializeField]
@@ -10,7 +11,6 @@ namespace HitmasterClone
         private float _moveSpeed;
         [SerializeField]
         private int _damage;
-
         private Rigidbody _rigidbody;
 
         private void Awake()
